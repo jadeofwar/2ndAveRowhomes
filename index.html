@@ -14,8 +14,7 @@
     <meta property="og:title" content="2nd Avenue Rowhomes | Fort Dodge, IA">
     <meta property="og:description"
         content="Premium 2024-built rowhomes featuring private entrances and luxury interiors.">
-    <meta property="og:image"
-        content="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:image" content="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Exterior-Hero.webp">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,10 +92,8 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <video autoplay muted loop playsinline class="hero-video" id="heroVideo" poster="assets/hero_poster.jpg">
-            <!-- Source will be updated once asset is provided -->
-            <source src="assets/hero_placeholder.mp4" type="video/mp4">
-        </video>
+        <img src="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Exterior-Hero.webp"
+            alt="2nd Avenue Rowhomes Exterior" class="hero-image">
         <div class="hero-content">
             <h1>Your Door. No Hallway. <br>Total Privacy.</h1>
             <p>Experience the "Privacy Premium" at Fort Dodge’s only 2024-built rowhomes. High-quality urban bases just
@@ -133,32 +130,79 @@
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section class="gallery reveal">
+    <!-- Full-Bleed Interstitial: Kitchen -->
+    <section class="interstitial reveal">
+        <img src="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Kitchen-01.webp" alt="Premium Rowhome Kitchen"
+            loading="lazy">
+    </section>
+
+    <!-- Floor Plans Section -->
+    <section class="floor-plans reveal" id="floor-plans">
         <div class="container">
             <div class="section-title">
-                <h2>Visual Sanctuary</h2>
-                <p>A glimpse into the 2nd Avenue experience.</p>
+                <h2>Find Your Perfect Layout</h2>
+                <p>Explore our efficient floor plans designed for modern living.</p>
             </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
-                        alt="Modern Rowhome Exterior" loading="lazy">
+            <div class="floor-plan-tabs">
+                <button class="tab-btn active" data-tab="type-a">A: 1BR Flat</button>
+                <button class="tab-btn" data-tab="type-b">B: 2BR Concise</button>
+                <button class="tab-btn" data-tab="type-c">C: 1BR Flat</button>
+                <button class="tab-btn" data-tab="type-d">D: 1BR ADA</button>
+                <button class="tab-btn" data-tab="type-r">R: 1BR Up</button>
+            </div>
+            <div class="floor-plan-content">
+                <div class="tab-panel active" id="type-a">
+                    <div class="floor-plan-display">
+                        <img src="Assets/Final Floor Plan PNGs/A - 1 BEDROOM FLAT.png" alt="Type A Floor Plan"
+                            loading="lazy">
+                        <img src="Assets/Final Axon Renderings/A - 1 Bedroom Flat.webp" alt="Type A Axon Rendering"
+                            loading="lazy">
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80"
-                        alt="Polished Kitchen Interior" loading="lazy">
+                <div class="tab-panel" id="type-b">
+                    <div class="floor-plan-display stacked">
+                        <img src="Assets/Final Floor Plan PNGs/B - 2 BED CONCISE.png" alt="Type B Floor Plan"
+                            loading="lazy">
+                        <div class="axon-pair">
+                            <img src="Assets/Final Axon Renderings/B - 2 Bedroom Concise 1st Flr.webp"
+                                alt="Type B Axon 1st Floor" loading="lazy">
+                            <img src="Assets/Final Axon Renderings/B - 2 Bedroom Concise 2nd Flr.webp"
+                                alt="Type B Axon 2nd Floor" loading="lazy">
+                        </div>
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=800&q=80"
-                        alt="Minimalist Living Space" loading="lazy">
+                <div class="tab-panel" id="type-c">
+                    <div class="floor-plan-display">
+                        <img src="Assets/Final Floor Plan PNGs/C - 1 BEDROOM FLAT.png" alt="Type C Floor Plan"
+                            loading="lazy">
+                        <img src="Assets/Final Axon Renderings/C - 1 Bedroom Flat.webp" alt="Type C Axon Rendering"
+                            loading="lazy">
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=800&q=80"
-                        alt="Modern Bathroom Fixtures" loading="lazy">
+                <div class="tab-panel" id="type-d">
+                    <div class="floor-plan-display">
+                        <img src="Assets/Final Floor Plan PNGs/D - 1 BEDROOM ADA.png" alt="Type D Floor Plan"
+                            loading="lazy">
+                        <img src="Assets/Final Axon Renderings/D - 1 Bedroom ADA.webp" alt="Type D Axon Rendering"
+                            loading="lazy">
+                    </div>
+                </div>
+                <div class="tab-panel" id="type-r">
+                    <div class="floor-plan-display">
+                        <img src="Assets/Final Floor Plan PNGs/R - 1 BEDROOM UP.png" alt="Type R Floor Plan"
+                            loading="lazy">
+                        <img src="Assets/Final Axon Renderings/R - 1 Bedroom Up.webp" alt="Type R Axon Rendering"
+                            loading="lazy">
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Full-Bleed Interstitial: Living -->
+    <section class="interstitial reveal">
+        <img src="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Living-01.webp"
+            alt="Comfortable Rowhome Living Space" loading="lazy">
     </section>
 
     <!-- Dynamic Live Availability -->
@@ -172,6 +216,12 @@
                 <p style="text-align: center; color: var(--text-muted);">Loading current availability...</p>
             </div>
         </div>
+    </section>
+
+    <!-- Full-Bleed Interstitial: Bathroom -->
+    <section class="interstitial reveal">
+        <img src="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Bathroom-01.webp" alt="Modern Rowhome Bathroom"
+            loading="lazy">
     </section>
 
     <!-- Employer Hub / Relocation Engine -->
@@ -265,6 +315,16 @@
         window.addEventListener('scroll', reveal);
         // Initial check
         reveal();
+
+        // Floor Plan Tab Logic
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
     </script>
 </body>
 

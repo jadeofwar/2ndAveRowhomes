@@ -106,7 +106,7 @@ h3 {
     overflow: hidden;
 }
 
-.hero-video {
+.hero-image {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -116,7 +116,21 @@ h3 {
     height: auto;
     transform: translate(-50%, -50%);
     object-fit: cover;
-    opacity: 0.4;
+    opacity: 0.5;
+}
+
+/* Full-Bleed Interstitial Section */
+.interstitial {
+    position: relative;
+    height: 50vh;
+    min-height: 300px;
+    overflow: hidden;
+}
+
+.interstitial img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hero-content {
@@ -373,4 +387,82 @@ section {
 
 .gallery-item:hover img {
     transform: scale(1.1);
+}
+
+/* Floor Plan Section */
+.floor-plan-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.floor-plan-content {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+.floor-plan-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    align-items: center;
+}
+
+.floor-plan-display img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+}
+
+.floor-plan-display.stacked {
+    grid-template-columns: 1.2fr 0.8fr;
+}
+
+.axon-pair {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+@media (max-width: 768px) {
+
+    .floor-plan-display,
+    .floor-plan-display.stacked {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
 }
