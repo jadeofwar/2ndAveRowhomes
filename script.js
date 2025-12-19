@@ -1,23 +1,30 @@
 // Event Tracking for SMS Lead Sources
 document.querySelectorAll('a[href^="sms:"]').forEach(link => {
     link.addEventListener('click', (e) => {
-        const source = link.getAttribute('data-lead-source') || 'sticky-footer';
-        console.log(`Lead Source Triggered: ${source}`);
-        // Integration for actual tracking (e.g. GA4) could be added here
+        const source = link.getAttribute('data-lead-source') || 'unknown';
+        const destination = link.getAttribute('href');
+        console.group(`🚀 Lead Source Triggered: ${source.toUpperCase()}`);
+        console.log(`Target: ${destination}`);
+        console.log(`Timestamp: ${new Date().toISOString()}`);
+        console.groupEnd();
+
+        // Potential GA4/GTM push:
+        // window.dataLayer = window.dataLayer || [];
+        // window.dataLayer.push({'event': 'sms_lead', 'source': source});
     });
 });
 
-// Airtable Integration placeholders
+// Airtable Integration
 const AIRTABLE_CONFIG = {
-    apiKey: 'pat.YOUR_TOKEN', // Placeholder
-    baseId: 'app.YOUR_BASE_ID', // Placeholder
+    apiKey: 'pat.YOUR_TOKEN',
+    baseId: 'app.YOUR_BASE_ID',
     pricingTable: 'Pricing Table',
     faqTable: 'FAQ Table'
 };
 
 async function fetchAirtableData(tableName) {
-    if (AIRTABLE_CONFIG.apiKey.includes('YOUR_TOKEN')) {
-        console.warn('Airtable API Key not set. Using fallback data.');
+    // If placeholders are still present, use fallback
+    if (AIRTABLE_CONFIG.apiKey.includes('YOUR_TOKEN') || AIRTABLE_CONFIG.baseId.includes('YOUR_BASE_ID')) {
         return getFallbackData(tableName);
     }
 
@@ -28,10 +35,13 @@ async function fetchAirtableData(tableName) {
                 Authorization: `Bearer ${AIRTABLE_CONFIG.apiKey}`
             }
         });
+
+        if (!response.ok) throw new Error(`Airtable API error: ${response.status}`);
+
         const data = await response.json();
         return data.records;
     } catch (error) {
-        console.error(`Error fetching ${tableName}:`, error);
+        console.error(`❌ Error fetching ${tableName}:`, error);
         return getFallbackData(tableName);
     }
 }
@@ -39,23 +49,52 @@ async function fetchAirtableData(tableName) {
 function getFallbackData(tableName) {
     if (tableName === AIRTABLE_CONFIG.pricingTable) {
         return [
-            { fields: { Name: '1BR Urban Base', Size: '572 sq ft', Price: '$1,200', SMS: "Hi, I'm interested in the 1-bedroom urban base." } },
-            { fields: { Name: '2BR Rowhome', Size: '1,088 sq ft', Price: '$1,800', SMS: "Hi, I'm interested in the 2-bedroom rowhome." } }
+            {
+                fields: {
+                    Name: '1BR Urban Base',
+                    Size: '572 SQ FT',
+                    Price: '$1,200/mo',
+                    Availability: 'Immediate',
+                    SMS: "Hi, I'm interested in the 1-bedroom urban base at 2nd Ave."
+                }
+            },
+            {
+                fields: {
+                    Name: '2BR Rowhome',
+                    Size: '1,088 SQ FT',
+                    Price: '$1,800/mo',
+                    Availability: 'Waitlist',
+                    SMS: "Hi, I'm interested in the 2-bedroom rowhome at 2nd Ave."
+                }
+            }
         ];
     }
     return [
-        { fields: { Question: 'What makes 2nd Avenue Rowhomes the quietest apartments in Fort Dodge?', Answer: 'Our "rowhome" design eliminates shared indoor hallways and common areas.' } }
+        {
+            fields: {
+                Question: 'What is the "Privacy Premium"?',
+                Answer: 'It means zero shared hallways. Your front door leads directly outside, giving you the privacy of a house with the convenience of an apartment.'
+            }
+        },
+        {
+            fields: {
+                Question: 'How close is Trinity Regional Medical Center?',
+                Answer: 'We are exactly 3 minutes away by car, making us the ideal base for healthcare professionals.'
+            }
+        }
     ];
 }
 
 function renderPricing(records) {
     const container = document.getElementById('pricing-container');
     if (!container) return;
+
     container.innerHTML = records.map(record => `
-        <div class="benefit-card glass-card">
+        <div class="benefit-card glass-card reveal">
+            <div class="availability-badge">${record.fields.Availability || 'Available'}</div>
             <h3>${record.fields.Name}</h3>
-            <p>${record.fields.Size} | ${record.fields.Price}</p>
-            <a href="sms:+15154000376?body=${encodeURIComponent(record.fields.SMS)}" class="btn btn-primary" data-lead-source="floor-plan">
+            <p class="unit-specs">${record.fields.Size} • ${record.fields.Price}</p>
+            <a href="sms:+15154000376?body=${encodeURIComponent(record.fields.SMS)}" class="btn btn-primary" data-lead-source="floor-plan-${record.fields.Name.toLowerCase().replace(/\s+/g, '-')}">
                 Text About This Unit
             </a>
         </div>
@@ -65,21 +104,40 @@ function renderPricing(records) {
 function renderFAQ(records) {
     const container = document.getElementById('faq-container');
     if (!container) return;
+
     container.innerHTML = records.map(record => `
-        <div class="faq-item" style="margin-bottom: var(--space-md); text-align: left;">
-            <h3 style="color: var(--primary); margin-bottom: var(--space-xs);">${record.fields.Question}</h3>
-            <p>${record.fields.Answer}</p>
+        <div class="faq-item reveal">
+            <div class="faq-question">
+                <h3>${record.fields.Question}</h3>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>${record.fields.Answer}</p>
+            </div>
         </div>
     `).join('');
+
+    // Add FAQ toggle logic
+    container.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const item = q.parentElement;
+            item.classList.toggle('active');
+            const toggle = q.querySelector('.faq-toggle');
+            toggle.textContent = item.classList.contains('active') ? '−' : '+';
+        });
+    });
 }
 
-// Initialize components
+// Initialize
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('2nd Avenue Rowhomes V2.0 Initialized');
+    console.log('%c 2nd Avenue Rowhomes V2.1 %c Relocation Engine Loaded ', 'background: #1a1a1a; color: #f0c040; padding: 5px; border-radius: 3px 0 0 3px;', 'background: #f0c040; color: #1a1a1a; padding: 5px; border-radius: 0 3px 3px 0;');
 
     const pricingData = await fetchAirtableData(AIRTABLE_CONFIG.pricingTable);
     renderPricing(pricingData);
 
     const faqData = await fetchAirtableData(AIRTABLE_CONFIG.faqTable);
     renderFAQ(faqData);
+
+    // Initial check for scroll reveal
+    window.dispatchEvent(new Event('scroll'));
 });
