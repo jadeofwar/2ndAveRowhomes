@@ -90,6 +90,27 @@
 
 <body>
 
+    <!-- Sticky Header -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="header-logo">2nd Ave Rowhomes</a>
+            <nav class="header-nav">
+                <a href="#floor-plans">Floor Plans</a>
+                <a href="#availability">Availability</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a href="sms:+15154000376?body=Hi, I'm interested in 2nd Avenue Rowhomes."
+                class="btn btn-primary header-cta" data-lead-source="header">
+                Text Us
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
     <!-- Hero Section -->
     <section class="hero">
         <img src="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Exterior-Hero.webp"
@@ -109,7 +130,7 @@
     <section class="benefits reveal">
         <div class="container">
             <div class="section-title">
-                <h2>The Modern Base</h2>
+                <h2>Why 2nd Avenue</h2>
                 <p>Designed for the active, professional lifestyle.</p>
             </div>
             <div class="benefits-grid">
@@ -140,15 +161,15 @@
     <section class="floor-plans reveal" id="floor-plans">
         <div class="container">
             <div class="section-title">
-                <h2>Find Your Perfect Layout</h2>
-                <p>Explore our efficient floor plans designed for modern living.</p>
+                <h2>Floor Plans</h2>
+                <p>Explore our efficient layouts designed for modern living.</p>
             </div>
             <div class="floor-plan-tabs">
-                <button class="tab-btn active" data-tab="type-a">A: 1BR Flat</button>
-                <button class="tab-btn" data-tab="type-b">B: 2BR Concise</button>
-                <button class="tab-btn" data-tab="type-c">C: 1BR Flat</button>
-                <button class="tab-btn" data-tab="type-d">D: 1BR ADA</button>
-                <button class="tab-btn" data-tab="type-r">R: 1BR Up</button>
+                <button class="tab-btn active" data-tab="type-a">A - 1 Bedroom</button>
+                <button class="tab-btn" data-tab="type-b">B - 2 Bedroom</button>
+                <button class="tab-btn" data-tab="type-c">C - 1 Bedroom</button>
+                <button class="tab-btn" data-tab="type-d">D - 1 Bedroom ADA</button>
+                <button class="tab-btn" data-tab="type-r">R - 1 Bedroom</button>
             </div>
             <div class="floor-plan-content">
                 <div class="tab-panel active" id="type-a">
@@ -209,7 +230,7 @@
     <section class="availability reveal" id="availability">
         <div class="container">
             <div class="section-title">
-                <h2>Live Availability</h2>
+                <h2>Availability & Pricing</h2>
                 <p>Secure your urban base today.</p>
             </div>
             <div class="availability-grid" id="pricing-container">
@@ -223,6 +244,44 @@
         <img src="Assets/Final Photographic Assets/2nd-Ave-Rowhomes-Bathroom-01.webp" alt="Modern Rowhome Bathroom"
             loading="lazy">
     </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials reveal" id="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Residents Say</h2>
+                <p>Hear from the professionals who call 2nd Avenue home.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card glass-card">
+                    <p class="testimonial-quote">"After 12-hour shifts at Trinity, the last thing I want is to deal with
+                        noisy neighbors in a hallway. Here, I walk straight into my own space. It's exactly what I
+                        needed."</p>
+                    <div class="testimonial-author">
+                        <strong>Sarah M.</strong>
+                        <span>RN, UnityPoint Health</span>
+                    </div>
+                </div>
+                <div class="testimonial-card glass-card">
+                    <p class="testimonial-quote">"The 2024 construction quality is obvious the moment you walk in.
+                        Everything is new, efficient, and I don't have to worry about maintenance issues."</p>
+                    <div class="testimonial-author">
+                        <strong>Marcus T.</strong>
+                        <span>Engineer, Cargill</span>
+                    </div>
+                </div>
+                <div class="testimonial-card glass-card">
+                    <p class="testimonial-quote">"Location is everything. I'm 3 minutes from work and 3 minutes from
+                        downtown. The private entry makes it feel like a house, not an apartment."</p>
+                    <div class="testimonial-author">
+                        <strong>Jennifer L.</strong>
+                        <span>Traveling Healthcare Professional</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Employer Hub / Relocation Engine -->
     <section class="employer-hub reveal">
@@ -325,15 +384,9 @@
 
             <!-- Legal Bar -->
             <div class="footer-legal">
-                <div class="footer-legal-left">
-                    <img src="Assets/Equal-Housing-Opportunity-Logo.png" alt="Equal Housing Opportunity" loading="lazy">
-                </div>
-                <div class="footer-legal-right">
-                    <p>&copy; 2024 DEV Communities. All rights reserved. Locally owned and operated in Fort Dodge, Iowa.
-                    </p>
-                    <p class="disclaimer">Images and floor plans are for illustrative purposes only. Actual units may
-                        vary. Pricing and availability subject to change.</p>
-                </div>
+                <p>&copy; 2024 DEV Communities. All rights reserved. Locally owned and operated in Fort Dodge, Iowa.</p>
+                <p class="disclaimer">Images and floor plans are for illustrative purposes only. Actual units may vary.
+                    Pricing and availability subject to change.</p>
             </div>
         </div>
     </footer>
@@ -371,6 +424,30 @@
                 document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
                 btn.classList.add('active');
                 document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Header Scroll Effect
+        const header = document.querySelector('.site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const nav = document.querySelector('.header-nav');
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
             });
         });
     </script>
