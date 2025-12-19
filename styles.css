@@ -659,6 +659,25 @@ section {
     font-weight: 500;
 }
 
+.btn-gold-outline {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-gold-outline:hover {
+    background: var(--accent);
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
 
 @media (max-width: 768px) {
 
