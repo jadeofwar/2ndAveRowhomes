@@ -678,11 +678,62 @@ section {
     transform: translateY(-2px);
 }
 
+/* Neighborhood Section */
+.neighborhood-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-md);
+    align-items: start;
+}
+
+.map-container {
+    overflow: hidden;
+    height: 100%;
+    min-height: 400px;
+}
+
+.amenities-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.amenity-category {
+    padding: var(--space-sm) var(--space-md);
+}
+
+.amenity-category h3 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.amenity-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.amenity-category li {
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.9;
+}
+
+.amenity-category li strong {
+    color: var(--text-main);
+}
+
 
 @media (max-width: 768px) {
 
     .floor-plan-display,
-    .floor-plan-display.stacked {
+    .floor-plan-display.stacked,
+    .neighborhood-grid {
         grid-template-columns: 1fr;
     }
 
