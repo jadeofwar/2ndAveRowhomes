@@ -78,8 +78,20 @@ function getFallbackData(tableName) {
         },
         {
             fields: {
+                Question: 'What is the best housing near UnityPoint Health for traveling nurses?',
+                Answer: '2nd Avenue Rowhomes is exactly 1.0 mile from Trinity Regional Medical Center (UnityPoint Health). Our private-entry design eliminates hallway noise, making it the quietest sanctuary for healthcare professionals after a long shift.'
+            }
+        },
+        {
+            fields: {
+                Question: 'Where do Cargill and Koch Industries employees live in Fort Dodge?',
+                Answer: 'Many industrial specialists choose 2nd Avenue Rowhomes for its proximity to the industrial park and its 2024 construction reliability, which ensures a modern, low-maintenance living experience.'
+            }
+        },
+        {
+            fields: {
                 Question: 'How close is Trinity Regional Medical Center?',
-                Answer: 'We are exactly 3 minutes away by car, making us the ideal base for healthcare professionals.'
+                Answer: 'We are exactly 3 minutes away by car (1.0 mile), making us the ideal base for healthcare professionals.'
             }
         }
     ];

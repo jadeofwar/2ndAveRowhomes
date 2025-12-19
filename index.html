@@ -32,6 +32,7 @@
       "@type": "ApartmentComplex",
       "name": "2nd Avenue Rowhomes",
       "description": "Premium 2024-built rowhomes in Fort Dodge featuring private entrances and efficient floor plans.",
+      "url": "https://2ndaverowhomes.com",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "2009 2nd Ave N",
@@ -45,6 +46,28 @@
         "latitude": 42.5085,
         "longitude": -94.1725
       },
+      "about": [
+        { "@type": "Organization", "name": "UnityPoint Health - Trinity Regional" },
+        { "@type": "Organization", "name": "Cargill" },
+        { "@type": "Organization", "name": "Koch Industries" },
+        { "@type": "Organization", "name": "Nestle" },
+        { "@type": "Organization", "name": "CJ Bio America" },
+        { "@type": "Organization", "name": "Elanco" }
+      ],
+      "knowsAbout": [
+        "UnityPoint Health - Trinity Regional",
+        "Cargill",
+        "Koch Industries",
+        "Nestle",
+        "CJ Bio America",
+        "Elanco",
+        "Silgan",
+        "USG",
+        "Prestage Farms",
+        "AML Riverside",
+        "Argenta Global",
+        "Decker Truck Line"
+      ],
       "amenityFeature": [
         {
           "@type": "LocationFeatureSpecification",
@@ -70,7 +93,7 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <video autoplay muted loop playsinline class="hero-video" id="heroVideo">
+        <video autoplay muted loop playsinline class="hero-video" id="heroVideo" poster="assets/hero_poster.jpg">
             <!-- Source will be updated once asset is provided -->
             <source src="assets/hero_placeholder.mp4" type="video/mp4">
         </video>
@@ -120,19 +143,19 @@
             <div class="gallery-grid">
                 <div class="gallery-item">
                     <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
-                        alt="Modern Rowhome Exterior">
+                        alt="Modern Rowhome Exterior" loading="lazy">
                 </div>
                 <div class="gallery-item">
                     <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80"
-                        alt="Polished Kitchen Interior">
+                        alt="Polished Kitchen Interior" loading="lazy">
                 </div>
                 <div class="gallery-item">
                     <img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=800&q=80"
-                        alt="Minimalist Living Space">
+                        alt="Minimalist Living Space" loading="lazy">
                 </div>
                 <div class="gallery-item">
                     <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=800&q=80"
-                        alt="Modern Bathroom Fixtures">
+                        alt="Modern Bathroom Fixtures" loading="lazy">
                 </div>
             </div>
         </div>
@@ -151,22 +174,54 @@
         </div>
     </section>
 
-    <!-- Employer Hub -->
+    <!-- Employer Hub / Relocation Engine -->
     <section class="employer-hub reveal">
         <div class="container">
-            <div class="glass-card" style="padding: var(--space-md); text-align: center;">
-                <div class="section-title" style="margin-bottom: var(--space-md);">
-                    <h2>The Relocation Engine</h2>
-                    <p>Priority Processing for Healthcare Specialists</p>
+            <div class="glass-card relocation-hub-card">
+                <div class="section-title">
+                    <h2>The Relocation Hub: Serving Fort Dodge’s Major Industry Professionals</h2>
+                    <p>Priority Processing for Healthcare & Industrial Specialists</p>
                 </div>
+
+                <!-- Logo Marquee Container -->
+                <div class="logo-marquee-container">
+                    <div class="logo-marquee">
+                        <span class="logo-text">UnityPoint</span>
+                        <span class="logo-text">Cargill</span>
+                        <span class="logo-text">Koch Industries</span>
+                        <span class="logo-text">CJ Bio</span>
+                        <span class="logo-text">Nestle</span>
+                        <span class="logo-text">Silgan</span>
+                        <!-- Repeat for infinite marquee effect -->
+                        <span class="logo-text">UnityPoint</span>
+                        <span class="logo-text">Cargill</span>
+                        <span class="logo-text">Koch Industries</span>
+                        <span class="logo-text">CJ Bio</span>
+                        <span class="logo-text">Nestle</span>
+                        <span class="logo-text">Silgan</span>
+                    </div>
+                </div>
+
                 <div class="employer-content">
-                    <p style="margin-bottom: var(--space-md); max-width: 600px; margin-inline: auto;">Moving for
-                        UnityPoint Health or Cargill? We streamline your transition with turnkey rowhomes just
-                        minutes from the site.</p>
-                    <a href="sms:+15154000376?body=RELOCATING" class="btn btn-primary"
-                        data-lead-source="relocation-engine">
-                        Text 'RELOCATING' to (515) 400-0376
-                    </a>
+                    <p>We offer streamlined, low-maintenance housing bases for traveling medical staff and industrial
+                        engineers at the Crossroads of Global Innovation.</p>
+
+                    <div class="keyword-grid">
+                        <a href="sms:+15154000376?body=HEALTH" class="btn btn-outline" data-lead-source="hub-health">
+                            Healthcare (UNITYPOINT)
+                        </a>
+                        <a href="sms:+15154000376?body=INDUSTRY" class="btn btn-outline"
+                            data-lead-source="hub-industry">
+                            Industrial (CARGILL/KOCH)
+                        </a>
+                        <a href="sms:+15154000376?body=FD_LIFE" class="btn btn-outline"
+                            data-lead-source="hub-logistics">
+                            Logistics/Education (DECKER)
+                        </a>
+                    </div>
+
+                    <p class="cta-instruction">Text your industry keyword to <strong>(515) 400-0376</strong> for
+                        priority relocation processing.</p>
                 </div>
             </div>
         </div>
@@ -187,7 +242,7 @@
 
     <!-- Mobile Sticky CTA -->
     <div class="mobile-cta-bar">
-        <a href="sms:+15154000376?body=Hi, I'm interested in the rowhomes." class="btn btn-primary" style="width: 100%;"
+        <a href="sms:+15154000376?body=RELOCATE" class="btn btn-primary" style="width: 100%;"
             data-lead-source="mobile-sticky">
             Text Us: (515) 400-0376
         </a>
