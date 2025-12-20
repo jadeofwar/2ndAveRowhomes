@@ -73,15 +73,24 @@ function getFallbackData(tableName) {
     ];
 }
 
+// Field IDs for robustness (derived from schema)
+const FIELDS = {
+    unitType: 'fld6CGZGggfJJrmne',
+    price: 'fld5i2z1CXscPCrV6',
+    promotions: 'fldDGSFtOUFeEEVqw',
+    question: 'fldkVCNBbCU7nK7Lu',
+    answer: 'fldzMc3nK4TtRgf45'
+};
+
 // Build pricing cache keyed by unit type
 function buildPricingCache(records) {
     records.forEach(record => {
-        const unitType = record.fields['Unit Type'];
+        const unitType = record.fields[FIELDS.unitType] || record.fields['Unit Type']; // Fallback to name if ID fails (rare)
         if (unitType) {
             // Normalize key by trimming to ensure matching
             pricingDataCache[unitType.trim()] = {
-                price: record.fields['Current Price'] || '',
-                promotions: record.fields['Promotions'] || ''
+                price: record.fields[FIELDS.price] || record.fields['Current Price'] || '',
+                promotions: record.fields[FIELDS.promotions] || record.fields['Promotions'] || ''
             };
         }
     });
@@ -134,11 +143,11 @@ function renderFAQ(records) {
     container.innerHTML = records.map(record => `
         <div class="faq-item reveal">
             <div class="faq-question">
-                <h3>${record.fields.Question || 'Question'}</h3>
+                 <h3>${record.fields[FIELDS.question] || record.fields.Question || 'Question'}</h3>
                 <span class="faq-toggle">+</span>
             </div>
             <div class="faq-answer">
-                <p>${record.fields.Answer || 'Answer coming soon.'}</p>
+                 <p>${record.fields[FIELDS.answer] || record.fields.Answer || 'Answer coming soon.'}</p>
             </div>
         </div>
     `).join('');
