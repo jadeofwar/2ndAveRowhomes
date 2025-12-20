@@ -14,7 +14,7 @@ document.querySelectorAll('a[href^="sms:"]').forEach(link => {
 const AIRTABLE_CONFIG = {
     apiKey: 'pat' + 'BCrI4nLXMrGfWc.92e4c7bb7593052d499ae550bc989568b5831a1610db788b20f182b7a5f0c31e',
     baseId: 'appYB5fLt8X3Q117v',
-    pricingTable: 'Pricing Table',
+    pricingTable: 'tblkfsPmorGvt1o2q', // Using Table ID for robustness
     faqTable: 'FAQ Table'
 };
 
