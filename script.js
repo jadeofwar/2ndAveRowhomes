@@ -134,11 +134,11 @@ function renderFAQ(records) {
     container.innerHTML = records.map(record => `
         <div class="faq-item reveal">
             <div class="faq-question">
-                <h3>${record.fields.Question}</h3>
+                <h3>${record.fields.Question || 'Question'}</h3>
                 <span class="faq-toggle">+</span>
             </div>
             <div class="faq-answer">
-                <p>${record.fields.Answer}</p>
+                <p>${record.fields.Answer || 'Answer coming soon.'}</p>
             </div>
         </div>
     `).join('');
