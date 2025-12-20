@@ -7,6 +7,7 @@
     --accent-glow: hsla(38, 85%, 52%, 0.4);
     --background: hsl(210, 20%, 98%);
     --surface: hsl(0, 0%, 100%);
+    --bg-surface: hsl(210, 20%, 96%);
     --text-main: hsl(210, 24%, 15%);
     --text-muted: hsl(210, 12%, 45%);
     --glass: rgba(255, 255, 255, 0.65);
@@ -25,6 +26,13 @@
 
     /* Transitions */
     --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+    :root {
+        --space-lg: 3rem;
+        --space-md: 1.5rem;
+    }
 }
 
 * {
@@ -422,9 +430,8 @@ section {
     }
 }
 
-/* Benefit Card Hover */
 .benefit-card {
-    padding: var(--space-md);
+    padding: var(--space-lg);
     text-align: center;
     transition: var(--transition);
 }
@@ -433,6 +440,7 @@ section {
     background: var(--surface);
     border-color: var(--accent);
     transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
 /* Relocation Hub Specifics */
@@ -626,7 +634,7 @@ section {
 .floor-plan-content {
     background: var(--surface);
     border-radius: var(--radius);
-    padding: var(--space-md);
+    padding: var(--space-lg);
     box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
@@ -638,7 +646,6 @@ section {
     display: none;
 }
 
-/* Social Proof Bar */
 .social-proof-bar {
     background: var(--bg-surface);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -705,7 +712,7 @@ section {
 .plan-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
     align-items: center;
 }
 
@@ -747,19 +754,20 @@ section {
 .feature-list {
     list-style: none;
     padding: 0;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
 }
 
 .feature-list li {
-    padding: 0.4rem 0;
+    padding: 0.5rem 0;
     color: var(--text-main);
     display: flex;
     align-items: center;
+    gap: 0.75rem;
 }
 
 .plan-ctas {
     display: flex;
-    gap: var(--space-md);
+    gap: var(--space-sm);
 }
 
 /* FAQ Accordion */
@@ -1037,10 +1045,14 @@ section {
 
 .amenity-category li {
     font-size: 0.95rem;
-    margin-bottom: 0.25rem;
+    padding: 0.5rem 0;
     display: flex;
     justify-content: space-between;
-    opacity: 0.9;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.amenity-category li:last-child {
+    border-bottom: none;
 }
 
 .amenity-category li strong {
@@ -1175,7 +1187,7 @@ section {
 .amenities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-sm);
+    gap: var(--space-md);
     margin-top: var(--space-md);
 }
 
@@ -1189,7 +1201,7 @@ section {
 }
 
 .amenities-grid .benefit-card {
-    padding: var(--space-sm) var(--space-md);
+    padding: var(--space-md);
     text-align: left;
     display: flex;
     flex-direction: column;
@@ -1251,7 +1263,7 @@ section {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-lg);
-    padding: var(--space-lg);
+    padding: var(--space-lg) var(--space-md);
     max-width: 900px;
     margin: 0 auto;
 }
