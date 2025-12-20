@@ -435,7 +435,7 @@ section {
 }
 
 .benefit-card {
-    padding: var(--space-lg);
+    padding: var(--space-md);
     text-align: center;
     transition: var(--transition);
 }
@@ -1228,6 +1228,10 @@ section {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: var(--space-lg);
     margin-bottom: var(--space-xl);
+}
+
+.employer-column {
+    padding: var(--space-md);
 }
 
 .employer-column ul {
