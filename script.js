@@ -27,20 +27,25 @@ async function fetchAirtableData(tableName) {
         return getFallbackData(tableName);
     }
 
-    const url = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${encodeURIComponent(tableName)}`;
+    // Add cache buster to prevent stale data
+    const url = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${encodeURIComponent(tableName)}?t=${new Date().getTime()}`;
+
     try {
+        console.log(`📡 Fetching ${tableName} from Airtable...`);
         const response = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${AIRTABLE_CONFIG.apiKey}`
             }
         });
 
-        if (!response.ok) throw new Error(`Airtable API error: ${response.status}`);
+        if (!response.ok) throw new Error(`Airtable API error: ${response.status} ${response.statusText}`);
 
         const data = await response.json();
+        console.log(`✅ ${tableName} loaded:`, data.records.length, 'records');
         return data.records;
     } catch (error) {
         console.error(`❌ Error fetching ${tableName}:`, error);
+        console.warn('⚠️ Switching to fallback data.');
         return getFallbackData(tableName);
     }
 }
@@ -73,7 +78,8 @@ function buildPricingCache(records) {
     records.forEach(record => {
         const unitType = record.fields['Unit Type'];
         if (unitType) {
-            pricingDataCache[unitType] = {
+            // Normalize key by trimming to ensure matching
+            pricingDataCache[unitType.trim()] = {
                 price: record.fields['Current Price'] || '',
                 promotions: record.fields['Promotions'] || ''
             };
