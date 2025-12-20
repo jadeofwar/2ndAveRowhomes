@@ -113,7 +113,7 @@ function renderFloorPlanPricing() {
             <div class="pricing-info">
                 <span class="price">${pricing.price}<span class="price-period">/month</span></span>
                 ${pricing.promotions ? `<span class="promo">${pricing.promotions}</span>` : ''}
-                <a href="${smsLink}" class="btn btn-gold-outline" data-lead-source="floor-plan-${unitType.toLowerCase().replace(/[^a-z0-9]+/g, '-')}" style="margin-top: 1rem;">
+                <a href="${smsLink}" class="btn btn-gold-outline" data-lead-source="floor-plan-${unitType.toLowerCase().replace(/[^a-z0-9]+/g, '-')}">
                     Text Us: (515) 400-0376
                 </a>
             </div>
