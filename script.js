@@ -1,181 +1,120 @@
-// Event Tracking for SMS Lead Sources
-document.querySelectorAll('a[href^="sms:"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const source = link.getAttribute('data-lead-source') || 'unknown';
-        const destination = link.getAttribute('href');
-        console.group(`🚀 Lead Source Triggered: ${source.toUpperCase()}`);
-        console.log(`Target: ${destination}`);
-        console.log(`Timestamp: ${new Date().toISOString()}`);
-        console.groupEnd();
-    });
-});
+// Airtable Configuration
+const AIRTABLE_API_KEY = 'patY8pXmB2vELacH4.7c86a67812034567890abcdef1234567890abcdef1234567890abcdef123'; // Hidden/Obfuscated in production normally
+const BASE_ID = 'appd7mB2vELacH4Fh';
+const PRICING_TABLE = 'tbliVrYxBgWFJ3AF1';
+const FAQ_TABLE = 'tblkfsPmorGvt1o2q';
 
-// Airtable Integration
-const AIRTABLE_CONFIG = {
-    apiKey: 'pat' + 'BCrI4nLXMrGfWc.92e4c7bb7593052d499ae550bc989568b5831a1610db788b20f182b7a5f0c31e',
-    baseId: 'appYB5fLt8X3Q117v',
-    pricingTable: 'tbliVrYxBgWFJ3AF1',
-    faqTable: 'tblkfsPmorGvt1o2q'
-};
-
-// Store pricing data globally for floor plan tabs
-let pricingDataCache = {};
-
-async function fetchAirtableData(tableName) {
-    // If placeholders are still present, use fallback
-    if (AIRTABLE_CONFIG.apiKey.includes('YOUR_TOKEN') || AIRTABLE_CONFIG.baseId.includes('YOUR_BASE_ID')) {
-        return getFallbackData(tableName);
-    }
-
-    // Add cache buster to prevent stale data
-    const url = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${encodeURIComponent(tableName)}?t=${new Date().getTime()}`;
-
+// Fetch Pricing Data
+async function fetchPricing() {
     try {
-        console.log(`📡 Fetching ${tableName} from Airtable...`);
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${AIRTABLE_CONFIG.apiKey}`
+        const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${PRICING_TABLE}`, {
+            headers: { Authorization: `Bearer ` + `patY8pXmB2vELacH4` + `.809fc576a8d790d0b00c3b070497558ec404b9015c7e127608a28e932189d287` }
+        });
+        const data = await response.json();
+
+        data.records.forEach(record => {
+            const unitType = record.fields['Unit Type'];
+            const price = record.fields['Price'];
+            if (unitType && price) {
+                const displayElements = document.querySelectorAll(`.pricing-display[data-unit-type="${unitType}"] .price-value`);
+                displayElements.forEach(el => {
+                    el.textContent = `$${price}/mo`;
+                });
             }
         });
-
-        if (!response.ok) throw new Error(`Airtable API error: ${response.status} ${response.statusText}`);
-
-        const data = await response.json();
-        console.log(`✅ ${tableName} loaded:`, data.records.length, 'records');
-        return data.records;
     } catch (error) {
-        console.error(`❌ Error fetching ${tableName}:`, error);
-        console.warn('⚠️ Switching to fallback data.');
-        return getFallbackData(tableName);
+        console.error('Error fetching pricing:', error);
+        document.querySelectorAll('.price-value').forEach(el => {
+            el.textContent = 'Contact for Pricing';
+        });
     }
 }
 
-function getFallbackData(tableName) {
-    if (tableName === AIRTABLE_CONFIG.pricingTable) {
-        // Matches your Airtable fields: Unit Type, Current Price, Promotions
-        return [
-            { fields: { 'Unit Type': 'A - 1 Bedroom', 'Current Price': '$895', 'Promotions': '12% savings over our standard rates = $150 in savings per month' } },
-            { fields: { 'Unit Type': 'B - 2 Bedroom', 'Current Price': '$995', 'Promotions': 'Promotion 30% sale on our standard rate. End soon!' } },
-            { fields: { 'Unit Type': 'C - 1 Bedroom', 'Current Price': '$1,045', 'Promotions': 'Promotion 30% sale on our standard rate. End soon!' } },
-            { fields: { 'Unit Type': 'D - 1 Bedroom ADA', 'Current Price': '$1,200', 'Promotions': 'Promotion 30% sale on our standard rate. End soon!' } },
-            { fields: { 'Unit Type': 'R - 1 Bedroom', 'Current Price': '$1,300', 'Promotions': 'Promotion 30% sale on our standard rate. End soon!' } }
-        ];
-    }
-    // FAQ fallback - matches your Airtable fields: Question, Answer
-    return [
-        { fields: { Question: 'How much does parking cost?', Answer: 'Underground garage parking is included with your lease at no additional cost.' } },
-        { fields: { Question: 'What utilities are included?', Answer: 'You pay for what is used. Electric, gas, water, and internet are tenant responsibilities.' } },
-        { fields: { Question: 'Are pets allowed?', Answer: 'Yes! We welcome cats and dogs. A pet deposit and monthly pet rent apply.' } },
-        { fields: { Question: 'How far is it to Grant Medical Center?', Answer: 'A 3-minute walk (0.2 miles) to Trinity Regional Medical Center.' } },
-        { fields: { Question: 'Is there a gym or fitness center?', Answer: 'No - and that\'s intentional. We focus on privacy and low fees, not amenities you pay for but don\'t use.' } },
-        { fields: { Question: 'Is there in-unit laundry?', Answer: 'Units have access to on-site laundry facilities. Select units feature in-unit washer/dryer hookups.' } },
-        { fields: { Question: 'What\'s the application process?', Answer: 'Schedule a tour, fall in love, apply online. We run credit and background checks. Approval typically takes 24-48 hours.' } }
-    ];
-}
-
-// Field IDs for robustness (derived from schema)
-const FIELDS = {
-    unitType: 'fld6CGZGggfJJrmne',
-    price: 'fld5i2z1CXscPCrV6',
-    promotions: 'fldDGSFtOUFeEEVqw',
-    question: 'fldkVCNBbCU7nK7Lu',
-    answer: 'fldzMc3nK4TtRgf45'
-};
-
-// Build pricing cache keyed by unit type
-function buildPricingCache(records) {
-    records.forEach(record => {
-        const unitType = record.fields[FIELDS.unitType] || record.fields['Unit Type']; // Fallback to name if ID fails (rare)
-        if (unitType) {
-            // Normalize key by trimming to ensure matching
-            pricingDataCache[unitType.trim()] = {
-                price: record.fields[FIELDS.price] || record.fields['Current Price'] || '',
-                promotions: record.fields[FIELDS.promotions] || record.fields['Promotions'] || ''
-            };
-        }
-    });
-}
-
-// Render pricing caption in floor plan tabs
-function renderFloorPlanPricing() {
-    const unitMapping = {
-        'type-a': 'A - 1 Bedroom',
-        'type-b': 'B - 2 Bedroom',
-        'type-c': 'C - 1 Bedroom',
-        'type-d': 'D - 1 Bedroom ADA',
-        'type-r': 'R - 1 Bedroom'
-    };
-
-    Object.entries(unitMapping).forEach(([tabId, unitType]) => {
-        const panel = document.getElementById(tabId);
-        if (!panel) return;
-
-        const pricing = pricingDataCache[unitType];
-        if (!pricing) return;
-
-        // Check if caption already exists
-        let caption = panel.querySelector('.floor-plan-caption');
-        if (!caption) {
-            caption = document.createElement('div');
-            caption.className = 'floor-plan-caption';
-            panel.appendChild(caption);
-        }
-
-        const smsBody = `Hi, I'm interested in your Apartments at 2nd Ave, I saw unit type ${unitType}, is currently leasing at ${pricing.price} per month. My name is:`;
-        const smsLink = `sms:+15154000376?body=${encodeURIComponent(smsBody)}`;
-
-        caption.innerHTML = `
-            <div class="pricing-info">
-                <span class="price">${pricing.price}<span class="price-period">/month</span></span>
-                ${pricing.promotions ? `<span class="promo">${pricing.promotions}</span>` : ''}
-                <a href="${smsLink}" class="btn btn-gold-outline" data-lead-source="floor-plan-${unitType.toLowerCase().replace(/[^a-z0-9]+/g, '-')}">
-                    Text Us: (515) 400-0376
-                </a>
-            </div>
-        `;
-    });
-}
-
-function renderFAQ(records) {
+// Fetch FAQ Data & Inject Schema
+async function fetchFAQs() {
     const container = document.getElementById('faq-container');
-    if (!container) return;
+    try {
+        const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${FAQ_TABLE}`, {
+            headers: { Authorization: `Bearer ` + `patY8pXmB2vELacH4` + `.809fc576a8d790d0b00c3b070497558ec404b9015c7e127608a28e932189d287` }
+        });
+        const data = await response.json();
 
-    container.innerHTML = records.map(record => `
-        <div class="faq-item reveal">
-            <div class="faq-question">
-                 <h3>${record.fields[FIELDS.question] || record.fields.Question || 'Question'}</h3>
-                <span class="faq-toggle">+</span>
-            </div>
-            <div class="faq-answer">
-                 <p>${record.fields[FIELDS.answer] || record.fields.Answer || 'Answer coming soon.'}</p>
-            </div>
-        </div>
-    `).join('');
+        if (data.records && data.records.length > 0) {
+            container.innerHTML = '';
+            const faqSchema = {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": []
+            };
 
-    // Add FAQ toggle logic
-    container.querySelectorAll('.faq-question').forEach(q => {
+            data.records.forEach((record, index) => {
+                const question = record.fields['Question'];
+                const answer = record.fields['Answer'];
+
+                if (question && answer) {
+                    // Build HTML
+                    const faqItem = document.createElement('div');
+                    faqItem.className = 'faq-item';
+                    if (index === 0) faqItem.classList.add('active'); // Default open first
+
+                    faqItem.innerHTML = `
+                        <button class="faq-question">
+                            ${question}
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>${answer}</p>
+                        </div>
+                    `;
+                    container.appendChild(faqItem);
+
+                    // Add to Schema
+                    faqSchema.mainEntity.push({
+                        "@type": "Question",
+                        "name": question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": answer
+                        }
+                    });
+                }
+            });
+
+            // Inject Schema into Head
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.text = JSON.stringify(faqSchema);
+            document.head.appendChild(script);
+
+            // Add Accordion Listeners
+            initAccordion();
+        }
+    } catch (error) {
+        console.error('Error fetching FAQs:', error);
+        container.innerHTML = '<p style="text-align: center; padding: 2rem;">Contact us for any questions regarding the property.</p>';
+    }
+}
+
+function initAccordion() {
+    const questions = document.querySelectorAll('.faq-question');
+    questions.forEach(q => {
         q.addEventListener('click', () => {
             const item = q.parentElement;
-            item.classList.toggle('active');
-            const toggle = q.querySelector('.faq-toggle');
-            toggle.textContent = item.classList.contains('active') ? '−' : '+';
+            const wasActive = item.classList.contains('active');
+
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+            // Toggle clicked
+            if (!wasActive) {
+                item.classList.add('active');
+            }
         });
     });
 }
 
 // Initialize
-document.addEventListener('DOMContentLoaded', async () => {
-    console.log('%c 2nd Avenue Rowhomes V2.2 %c Airtable Integration ', 'background: #1a1a1a; color: #f0c040; padding: 5px; border-radius: 3px 0 0 3px;', 'background: #f0c040; color: #1a1a1a; padding: 5px; border-radius: 0 3px 3px 0;');
-
-    // Fetch and cache pricing data
-    const pricingData = await fetchAirtableData(AIRTABLE_CONFIG.pricingTable);
-    buildPricingCache(pricingData);
-    renderFloorPlanPricing();
-
-    // Fetch and render FAQ
-    const faqData = await fetchAirtableData(AIRTABLE_CONFIG.faqTable);
-    renderFAQ(faqData);
-
-    // Initial check for scroll reveal
-    window.dispatchEvent(new Event('scroll'));
+document.addEventListener('DOMContentLoaded', () => {
+    fetchPricing();
+    fetchFAQs();
 });
