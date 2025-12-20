@@ -1,0 +1,26 @@
+# 2nd Avenue Rowhomes
+
+## Description
+2nd Avenue Rowhomes is a premium, 2024-built rowhome community in Fort Dodge, Iowa, located at 2009 2nd Ave N. It features 1-bedroom and 2-bedroom units with private exterior walk-up entries, eliminating shared hallways for maximum privacy.
+
+## Key Features
+- **Privacy Premium**: No shared hallways, private entrances.
+- **Location**: "The 3-Minute Life" — 3 minutes to Trinity Regional Medical Center, Hy-Vee, Target, and downtown.
+- **Modern Construction**: Completed in 2024 with CUPACLAD natural slate exteriors.
+- **Amenities**: In-unit or on-site laundry, stainless steel appliances, individual HVAC, fiber internet ready.
+- **Unit Types**:
+  - Type A: 1 Bedroom Flat
+  - Type B: 2 Bedroom Concise (Two-story)
+  - Type C: 1 Bedroom Flat
+  - Type D: 1 Bedroom ADA Compliant
+  - Type R: 1 Bedroom Up (Second floor)
+
+## Pricing & Availability
+Pricing and promotions are dynamically updated via Airtable integration on the website.
+- Contact: (515) 400-0376
+- Website: https://2ndaverowhomes.com
+
+## Policies
+- Equal Housing Opportunity.
+- Pet friendly (contact for details).
+- Strict non-smoking policy.
